@@ -28,7 +28,13 @@ int main(int argc, char **argv)
     // if (head == NULL)
     //     printf("NULL\n")
     DisplayNodes(head);
-    SolveByRecursion(&head, M);
+    // DeleteNode(&head);
+    struct node *p = (struct node *)malloc(sizeof(struct node));
+    p->number = 5;
+    DeleteNode(&head, p);
+
+    DisplayNodes(head);
+    // SolveByRecursion(&head, M);
 
     return 0;
 }
@@ -66,7 +72,15 @@ void DisplayNodes(struct node *head)
 // DeleteNode
 void DeleteNode(struct node **head, struct node *d)
 {
-
+    struct node *p = *head;
+    while (p && p->next && (p->next->number != d->number)) {
+        p = p->next;
+    }
+    // delete p->next
+    printf("Delete %d\n", p->next->number);
+    struct node *tmp = p->next;
+    p->next = tmp->next;
+    free(tmp);
 }
 
 // SolveByRecursion
