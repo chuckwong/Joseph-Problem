@@ -5,13 +5,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int N = 6;
-int K = 0;
+int N = 6; // default 6
+int K = 0; // default 0
 
 #define M 3
 
 struct node {
     int number;
+    int password;
     struct node *next;
     int flag; // flag = 0 means deleted
 };
@@ -22,6 +23,7 @@ void DeleteNode(struct node **head, int number);
 void Solve(struct node **head, int m, int k);
 void SolveByRecursion(struct node **head, struct node *lp, int m);
 void Restore(struct node **head);
+void InputPassword(struct node **head);
 
 // main
 int main(int argc, char **argv)
@@ -30,21 +32,31 @@ int main(int argc, char **argv)
     
     // Input
     printf("约瑟夫环程序 - 王俊皓 - 2014101027\n\n");
-    scanf("请输入总人数N: %d", &N);
-    scanf("请输入初始值K: %d", &K);
+    printf("请输入总人数N: ");
+    scanf("%d", &N);
+    printf("请输入初始值K: ");
+    scanf("%d", &K);
     
     // Init
     InitNodes(&head);
+    
+    // Password
+    InputPassword(&head);
+    
+    // Print Origin
     printf("原始: ");
     DisplayNodes(head);
+    
     // Result
     printf("循环: ");
     Solve(&head, M, K);
+    
     // Restore
-    Restore(&head);
+    Restore(&head); 
     // Result
     printf("递归: ");
     SolveByRecursion(&head, NULL, M);
+    
     // End
     printf("---------END---------\n");
     return 0;
@@ -159,7 +171,18 @@ void Restore(struct node **head)
     (*head)->number = N;
 }
 
-
+// InputPassword
+void InputPassword(struct node **head)
+{
+    struct node *p = (*head)->next;
+    int i = 0;
+    while (i < N) {
+        printf("请输入密码(编号%d): ", i + 1);
+        scanf("%d", &p->password);
+        p = p->next;
+        i++;
+    }
+}
 
 
 
