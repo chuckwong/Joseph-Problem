@@ -20,7 +20,7 @@ struct node {
 void InitNodes(struct node **head);
 void DisplayNodes(struct node *head);
 void DeleteNode(struct node **head, int number);
-void Solve(struct node **head, int m, int k);
+void Solve(struct node **head, int m);
 void SolveByRecursion(struct node **head, struct node *lp, int m);
 void Restore(struct node **head);
 void InputPassword(struct node **head);
@@ -44,21 +44,24 @@ int main(int argc, char **argv)
     InputPassword(&head);
     
     // Print Origin
+    printf("\n");
     printf("原始: ");
     DisplayNodes(head);
     
     // Result
     printf("循环: ");
-    Solve(&head, M, K);
+    Solve(&head, K);
     
     // Restore
-    Restore(&head); 
+    Restore(&head);
+    
     // Result
     printf("递归: ");
     SolveByRecursion(&head, NULL, M);
     
     // End
     printf("---------END---------\n");
+    
     return 0;
 }
 
@@ -113,13 +116,13 @@ void DeleteNode(struct node **head, int number)
 }
 
 // Solve
-void Solve(struct node **head, int m, int k)
+void Solve(struct node **head, int m)
 {
-    // int j = 0;
+    int count = m;
     struct node *p = (*head)->next;
     while ((*head)->number > 0) {
         int i = 0;
-        while (p && (i < M - 1 || p->flag == 0)) {
+        while (p && (i < count - 1 || p->flag == 0)) {
             if (p->flag == 0) {
                 p = p->next;
                 continue;
@@ -128,9 +131,8 @@ void Solve(struct node **head, int m, int k)
                 p = p->next;
             }
         }
-        // k = 0;
-        // j = m;
         DeleteNode(head, p->number);
+        count = p->password;
         p = p->next;
     }
     printf("\n");
@@ -155,7 +157,7 @@ void SolveByRecursion(struct node **head, struct node *lp, int m)
         }
     }
     DeleteNode(head, p->number);
-    SolveByRecursion(head, p, M);
+    SolveByRecursion(head, p->next, p->password);
 }
 
 // Restore
