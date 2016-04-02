@@ -5,9 +5,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define N 6
+int N = 6;
+int K = 0;
+
 #define M 3
-#define K 2
 
 struct node {
     int number;
@@ -19,19 +20,32 @@ void InitNodes(struct node **head);
 void DisplayNodes(struct node *head);
 void DeleteNode(struct node **head, int number);
 void Solve(struct node **head, int m, int k);
-void SolveByRecursion(struct node **head, int m);
+void SolveByRecursion(struct node **head, struct node *lp, int m);
+void Restore(struct node **head);
 
 // main
 int main(int argc, char **argv)
 {
     struct node *head;
     
-    InitNodes(&head);
-    DisplayNodes(head);
-    // printf("Length = %d\n", GetLength(head));
-    // DisplayNodes(head);
+    // Input
+    printf("约瑟夫环程序 - 王俊皓 - 2014101027\n\n");
+    scanf("请输入总人数N: %d", &N);
+    scanf("请输入初始值K: %d", &K);
     
+    // Init
+    InitNodes(&head);
+    printf("原始: ");
+    DisplayNodes(head);
+    // Result
+    printf("循环: ");
     Solve(&head, M, K);
+    // Restore
+    Restore(&head);
+    // Result
+    printf("递归: ");
+    SolveByRecursion(&head, NULL, M);
+    // End
     printf("---------END---------\n");
     return 0;
 }
@@ -80,9 +94,9 @@ void DeleteNode(struct node **head, int number)
     // delete p->next
     if (p && p->next && (p->next->number == number)) {
         p->next->flag = 0;
-        printf("\nDelete ------------ %d\n", p->next->number);
+        printf("%d   ", p->next->number);
         (*head)->number--;
-        DisplayNodes(*head);
+//        DisplayNodes(*head);
     }
 }
 
@@ -107,23 +121,44 @@ void Solve(struct node **head, int m, int k)
         DeleteNode(head, p->number);
         p = p->next;
     }
+    printf("\n");
 }
 
 // SolveByRecursion
-void SolveByRecursion(struct node **head, int m)
+void SolveByRecursion(struct node **head, struct node *lp, int m)
 {
-    if (*head == NULL) {
-        printf("结束\n");
+    if ((*head)->number == 0) {
+        printf("\n");
+        return;
     }
-    struct node *p = *head;
+    struct node *p = lp ? lp : (*head)->next;
     int i = 0;
-    while (p && i < m - 1) {
+    while (p && (i < M - 1 || p->flag == 0)) {
+        if (p->flag == 0) {
+            p = p->next;
+            continue;
+        } else {
+            i++;
+            p = p->next;
+        }
+    }
+    DeleteNode(head, p->number);
+    SolveByRecursion(head, p, M);
+}
+
+// Restore
+void Restore(struct node **head)
+{
+    struct node *p = (*head)->next;
+    int i = 0;
+    while (i < N) {
+        p->flag = 1;
         p = p->next;
         i++;
     }
-    DeleteNode(head, p->number);
-    SolveByRecursion(&p, M);
+    (*head)->number = N;
 }
+
 
 
 
