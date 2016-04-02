@@ -1,0 +1,18 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+DeleteNode	main.c	/^void DeleteNode(struct node **head, int number)$/;"	f
+DisplayNodes	main.c	/^void DisplayNodes(struct node *head)$/;"	f
+InitNodes	main.c	/^void InitNodes(struct node **head)$/;"	f
+K	main.c	10;"	d	file:
+M	main.c	9;"	d	file:
+N	main.c	8;"	d	file:
+Solve	main.c	/^void Solve(struct node **head, int m, int k)$/;"	f
+SolveByRecursion	main.c	/^void SolveByRecursion(struct node **head, int m)$/;"	f
+main	main.c	/^int main(int argc, char **argv)$/;"	f
+next	main.c	/^    struct node *next;$/;"	m	struct:node	typeref:struct:node::node	file:
+node	main.c	/^struct node {$/;"	s	file:
+number	main.c	/^    int number;$/;"	m	struct:node	file:
