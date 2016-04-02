@@ -1,14 +1,12 @@
 /*
- author = chuck
- */
+    author = chuck
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
 
 int N = 6; // default 6
 int K = 0; // default 0
-
-#define M 3
 
 struct node {
     int number;
@@ -57,10 +55,10 @@ int main(int argc, char **argv)
     
     // Result
     printf("递归: ");
-    SolveByRecursion(&head, NULL, M);
+    SolveByRecursion(&head, NULL, K);
     
     // End
-    printf("---------END---------\n");
+    printf("\n---------- END ----------\n");
     
     return 0;
 }
@@ -111,7 +109,6 @@ void DeleteNode(struct node **head, int number)
         p->next->flag = 0;
         printf("%d   ", p->next->number);
         (*head)->number--;
-//        DisplayNodes(*head);
     }
 }
 
@@ -147,7 +144,7 @@ void SolveByRecursion(struct node **head, struct node *lp, int m)
     }
     struct node *p = lp ? lp : (*head)->next;
     int i = 0;
-    while (p && (i < M - 1 || p->flag == 0)) {
+    while (p && (i < m - 1 || p->flag == 0)) {
         if (p->flag == 0) {
             p = p->next;
             continue;
